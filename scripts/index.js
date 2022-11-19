@@ -158,6 +158,8 @@ const data={
     ]
   }
   
+//Set cards------------------------------------------------------------------------------------------------
+//Render cards
   function setCards() {
       let card = ``;
       const settingCard = document.getElementById("cards");
@@ -180,4 +182,49 @@ const data={
       }
       settingCard.innerHTML = card;
   }
-  setCards();
+setCards();
+
+//Set categories------------------------------------------------------------------------------------------------
+//Array without repeated categories
+let arrayCategories = data.eventos.map(ev => ev.category)
+const arrayCatNoRep = [... new Set(arrayCategories)];
+console.log(arrayCatNoRep); 
+
+//Render categories
+const categoriesContainer = document.getElementById("categories-container")
+function setCategories() {
+  arrayCatNoRep.forEach(cat => {
+    const divCheckbox = document.createElement("div")
+    divCheckbox.classList.add("checkbox-container")
+    divCheckbox.innerHTML = `
+    <input type="checkbox" id="category" name="category7" value="category4">
+    <label for="category">${cat}</label>
+    `;
+    categoriesContainer.appendChild(divCheckbox);
+  })
+} 
+setCategories();
+
+//Search bar filter------------------------------------------------------------------------------------------------
+const inputSearchEvent = document.getElementById("search-event");
+const cardsContainer = document.getElementById("cards");
+const eventCards = document.querySelectorAll(".card");
+inputSearchEvent.addEventListener("keyup", (event) => {
+  eventCards.forEach((eventCard) => {
+    eventCard.textContent.toLowerCase().includes(event.target.value.toLowerCase())
+    ? eventCard.classList.remove("hidden")
+    : eventCard.classList.add("hidden")
+  })
+  
+})
+
+//Consultar busqueda y match solo por titulo y no por card entera
+
+function noMatch() {
+  noCardTextDiv = document.createElement("div");
+  noCardTextDiv.classList.add("noCard-text-container");
+  noCardTextDiv.innerHTML = `<p>There's no matching results`;
+  cardsContainer.appendChild(noCardTextDiv);
+} 
+
+//Consultar lo de mensaje de busqueda

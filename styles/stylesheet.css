@@ -76,7 +76,7 @@ h1 {
 }
 
 .searching {
-    width: 40%;
+    width: 30%;
     display: flex;
     justify-content: flex-end;
 }
@@ -86,20 +86,20 @@ i {
 }
 
 .searching > input {
-    width: 70%;
+    width: 50%;
     margin-right: 1%;
 }
 
 .categories-container {
-    width: 60%;
+    display: flex;
+    width: 100%;  
 }
 
-.categories-container > label{
-    padding-right: 3%;
-}
-
-#category {
-    padding: 10px;
+.checkbox-container {
+    display: flex;
+    align-items: baseline;
+    margin-left: 1%;
+    margin-right: 1%;
 }
 
 input[type=text] {
@@ -120,6 +120,10 @@ input[type=text] {
 
 .search-but:hover {
     background-color: #D90368;
+}
+
+.hidden {
+    display: none;
 }
 
 .cards {

@@ -190,12 +190,13 @@ function setCards() {
   for (let i=0; i < data.eventos.length; i++) {
     if (dateTimeStamp > dateConvert(i)) {
       card += `
-        <div class="card" style="width: 18rem;">
+        <div class="card" id="${data.eventos[i].category.replace(" ","-").toLocaleLowerCase()}" style="width: 18rem;">
           <div class="image-card-container">
             <img src="${data.eventos[i].image}" class="card-img-top" alt="food fair">
           </div>
           <div class="card-body">
             <h5 class="card-title">${data.eventos[i].name}</h5>
+            <h6 class="category-title" style="display:none;">${data.eventos[i].category.replace(" ","-").toLocaleLowerCase()}</h6>
             <p class="card-text" style="overflow:auto; height:8vh">${data.eventos[i].description}</p>
           </div>
           <div class="bottom-card"> 
@@ -211,18 +212,21 @@ function setCards() {
 
 setCards();
 
+//Set categories------------------------------------------------------------------------------------------------
+//Array without repeated categories
 let arrayCategories = data.eventos.map(ev => ev.category)
 const arrayCatNoRep = [... new Set(arrayCategories)];
 console.log(arrayCatNoRep); 
 
+//Render categories
 const categoriesContainer = document.getElementById("categories-container")
 function setCategories() {
   arrayCatNoRep.forEach(cat => {
     const divCheckbox = document.createElement("div")
     divCheckbox.classList.add("checkbox-container")
     divCheckbox.innerHTML = `
-    <input type="checkbox" id="category" name="category7" value="category4">
-    <label for="category">${cat}</label>
+    <input type="checkbox" class="input-categories" id="${cat.replace(" ","-").toLocaleLowerCase()}" name="${cat.replace(" ","-").toLocaleLowerCase()}" value="${cat.replace(" ","-").toLocaleLowerCase()}">
+    <label for="${cat.replace(" ","-").toLocaleLowerCase()}">${cat}</label>
     `;
     categoriesContainer.appendChild(divCheckbox);
   })
@@ -240,4 +244,37 @@ inputSearchEvent.addEventListener("keyup", (event) => {
     : eventCard.classList.add("hidden")
   })
   
+})
+
+//Checkbox Filter----------------------------------------------------------------------
+const checkboxesForm = document.getElementById("categories-container");
+const cardCategories = document.getElementsByClassName("category-title");
+
+checkboxesForm.addEventListener("change", () => {
+  
+  const checkboxesCat = document.querySelectorAll(".input-categories");
+  let checkboxesCheckedValue = [];
+  
+  checkboxesCat.forEach((checkbox) => {
+    if (checkbox.checked) 
+    checkboxesCheckedValue.push(checkbox.value); 
+  })
+
+  console.log(checkboxesCheckedValue);  
+
+for(let i=0; i<cardCategories.length; i++) {
+  if (checkboxesCheckedValue.includes(cardCategories[i].textContent)){
+    cardCategories[i].parentElement.parentElement.classList.remove("hidden");
+    //console.log("funciono");
+  }
+  else if(!checkboxesCheckedValue.includes(cardCategories[i].textContent)){  
+    cardCategories[i].parentElement.parentElement.classList.add("hidden");
+    //console.log("no funciono");
+  } 
+} 
+
+if(checkboxesCheckedValue.length === 0){
+  setCards();
+}
+
 })

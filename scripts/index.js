@@ -255,14 +255,10 @@ for(let i=0; i<cardCategories.length; i++) {
     cardCategories[i].parentElement.parentElement.classList.add("hidden");
     //console.log("no funciono");
   } 
-  /* else if(checkboxesCheckedValue.length === 0){
-    cardCategories[i].parentElement.parentElement.classList.remove("hidden");
-  } */
 } 
 
 if(checkboxesCheckedValue.length === 0){
   setCards();
-  //cardCategories[i].parentElement.parentElement.classList.remove("hidden");
 }
 
 })
